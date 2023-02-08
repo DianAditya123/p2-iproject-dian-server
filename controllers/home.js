@@ -1,7 +1,8 @@
-const {Photografer, Foto, Type, Cart} = require('../models')
+const { Photografer, Foto, Type, Cart, User } = require('../models')
+const midtransClient = require('midtrans-client')
 
-class homeController{
-    static async showType(req, res, next){
+class homeController {
+    static async showType(req, res, next) {
         try {
             let data = await Type.findAll()
             res.status(200).json(data)
@@ -10,7 +11,7 @@ class homeController{
         }
     }
 
-    static async showPh(req, res, next){
+    static async showPh(req, res, next) {
         try {
             let data = await Photografer.findAll()
             res.status(200).json(data)
@@ -19,7 +20,7 @@ class homeController{
         }
     }
 
-    static async foto(req, res, next){
+    static async foto(req, res, next) {
         try {
             let data = await Foto.findAll()
             res.status(200).json(data)
@@ -30,9 +31,9 @@ class homeController{
 
     static async addCart(req, res, next) {
         try {
-            let {PhotograferId, TypeId, address} = req.body
-            let data = await Cart.create({PhotograferId, TypeId, address, UserId: req.user.id, status: false})
-            res.status(201).json({message: "Success"})
+            let { PhotograferId, TypeId, address } = req.body
+            let data = await Cart.create({ PhotograferId, TypeId, address, UserId: req.user.id, status: false })
+            res.status(201).json({ message: "Success" })
         } catch (error) {
             console.log(error);
         }
