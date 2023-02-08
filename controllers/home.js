@@ -1,4 +1,4 @@
-const {Photografer, Foto, Type, Cart, Transction} = require('../models')
+const {Photografer, Foto, Type, Cart, Transaction} = require('../models')
 
 class homeController{
     static async showType(req, res, next){
@@ -23,6 +23,17 @@ class homeController{
         try {
             let data = await Foto.findAll()
             res.status(200).json(data)
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    static async addCart(req, res, next) {
+        try {
+            let {PhotograferId, TypeId, address} = req.body
+            let data = await Cart.create({PhotograferId, TypeId, address, UserId: req.user.id})
+            await Transaction.create({CartId: data.id, status: false})
+            res.status(201).json({message: "Success"})
         } catch (error) {
             console.log(error);
         }
