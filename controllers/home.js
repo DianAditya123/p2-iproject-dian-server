@@ -31,9 +31,9 @@ class homeController {
 
     static async addCart(req, res, next) {
         try {
-            let { PhotograferId, TypeId, address } = req.body
-            let data = await Cart.create({ PhotograferId, TypeId, address, UserId: req.user.id, status: false })
-            res.status(201).json({ message: "Success" })
+            let {PhotograferId, TypeId, address, date} = req.body
+            let data = await Cart.create({PhotograferId, TypeId, address, UserId: req.user.id,date, status: false})
+            res.status(201).json({message: "Success"})
         } catch (error) {
             console.log(error);
         }
