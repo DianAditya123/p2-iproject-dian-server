@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
     PhotograferId: DataTypes.INTEGER,
     TypeId: DataTypes.INTEGER,
     address: DataTypes.TEXT,
-    date: DataTypes.DATE,
+    date: DataTypes.STRING,
     status: DataTypes.BOOLEAN
   }, {
     sequelize,
