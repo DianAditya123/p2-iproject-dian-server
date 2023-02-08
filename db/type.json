@@ -1,0 +1,17 @@
+[
+    {
+        "title": "Foto Keluarga",
+        "price": "400000",
+        "totalPhoto": 3
+    },
+    {
+        "title": "Foto Pasangan",
+        "price": "250000",
+        "totalPhoto": 3
+    },
+    {
+        "title": "Foto Sendiri",
+        "price": "150000",
+        "totalPhoto": 3
+    }
+]
