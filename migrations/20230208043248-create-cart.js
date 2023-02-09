@@ -46,6 +46,15 @@ module.exports = {
       date: {
         type: Sequelize.STRING 
       },
+      price: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: "Types",
+          key: "id"
+        },
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE"
+      },
       status: {
         type: Sequelize.BOOLEAN
       },

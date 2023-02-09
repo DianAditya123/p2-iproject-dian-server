@@ -22,7 +22,14 @@ class homeController {
 
     static async foto(req, res, next) {
         try {
-            let data = await Foto.findAll()
+            let data = await Foto.findAll({
+                include: {
+                    model: Photografer,
+                    attibutes: {
+                        include: ['username']
+                    }
+                }
+            })
             res.status(200).json(data)
         } catch (error) {
             console.log(error);
@@ -32,8 +39,22 @@ class homeController {
     static async addCart(req, res, next) {
         try {
             let {PhotograferId, TypeId, address, date} = req.body
-            let data = await Cart.create({PhotograferId, TypeId, address, UserId: req.user.id,date, status: false})
+            let type = await Type.findByPk(TypeId)
+            let data = await Cart.create({PhotograferId, TypeId, address, UserId: req.user.id, date, price: type.price,status: false})
             res.status(201).json({message: "Success"})
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    static async showCart(req, res, next) {
+        try {
+            let data = await Cart.findAll({
+                where: {
+                    UserId: req.user.id
+                }
+            })
+            res.status(200).json(data)
         } catch (error) {
             console.log(error);
         }
@@ -51,7 +72,7 @@ class homeController {
             let parameter = {
                 "transaction_details": {
                     "order_id": "TRANSACTION_" + Math.floor(1000000 + Math.random() * 9000000),
-                    "gross_amount": 10000
+                    "gross_amount": +data.price
                 },
                 "credit_card": {
                     "secure": true
