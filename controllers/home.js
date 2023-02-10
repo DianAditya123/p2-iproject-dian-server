@@ -1,5 +1,6 @@
 const { Photografer, Foto, Type, Cart, User } = require('../models')
-const midtransClient = require('midtrans-client')
+const midtransClient = require('midtrans-client');
+const sendEmail = require('../helpers/nodemailer');
 
 class homeController {
     static async showType(req, res, next) {
@@ -65,6 +66,7 @@ class homeController {
         try {
             let {id} = req.params
             let data = await Cart.update({status: true}, {where: {id}})
+            sendEmail(req.user.email)
             res.status(200).json({message: "WOke"})
         } catch (error) {
             
@@ -72,7 +74,10 @@ class homeController {
     }
 
     static async midtrans(req, res, next) {
-        let data = Type.findAll()
+        let {id} = req.params
+        let data = await Cart.findOne({
+            where: {id}
+        })
         try {
             const user = await User.findByPk(req.user.id)
             let snap = new midtransClient.Snap({
@@ -83,7 +88,7 @@ class homeController {
             let parameter = {
                 "transaction_details": {
                     "order_id": "TRANSACTION_" + Math.floor(1000000 + Math.random() * 9000000),
-                    "gross_amount": +data.price
+                    "gross_amount": data.price
                 },
                 "credit_card": {
                     "secure": true
