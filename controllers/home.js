@@ -40,7 +40,7 @@ class homeController {
         try {
             let {PhotograferId, TypeId, address, date} = req.body
             let type = await Type.findByPk(TypeId)
-            let data = await Cart.create({PhotograferId, TypeId, address, UserId: req.user.id, date, price: type.price,status: false})
+            let data = await Cart.create({PhotograferId, TypeId, address, UserId: req.user.id, date, price: +type.price,status: false})
             res.status(201).json({message: "Success"})
         } catch (error) {
             console.log(error);
@@ -61,7 +61,6 @@ class homeController {
     }
 
     static async midtrans(req, res, next) {
-        let data = Type.findAll()
         try {
             const user = await User.findByPk(req.user.id)
             let snap = new midtransClient.Snap({
@@ -72,7 +71,7 @@ class homeController {
             let parameter = {
                 "transaction_details": {
                     "order_id": "TRANSACTION_" + Math.floor(1000000 + Math.random() * 9000000),
-                    "gross_amount": +data.price
+                    "gross_amount": 1000000
                 },
                 "credit_card": {
                     "secure": true
