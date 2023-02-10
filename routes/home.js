@@ -9,5 +9,6 @@ router.get('/foto', homeController.foto)
 router.use(authentication)
 router.get('/cart', homeController.showCart)
 router.post('/cart', homeController.addCart)
-router.post('/generate-token', homeController.midtrans)
+router.patch('/cart/:id', homeController.payment)
+router.post('/generate-token/:id', homeController.midtrans)
 module.exports = router
