@@ -7,15 +7,15 @@ function sendEmail(email) {
         service: "gmail",
         secure: true,
         auth: {
-            user: "dianaditya200@gmail.com",
-            pass: "ljntjhkrmfcowsdr"
+            user: "dianxpowerranger@gmail.com",
+            pass: "qoptkyweaikqqzjz"
         },
         debug: true,
         logger: true
     });
 
     const option = {
-        from: "dianaditya200@gmail.com",
+        from: "dianxpowerranger@gmail.com",
         to: email,
         subject: "Acount Success Create",
         text: "Thank You!! ",
